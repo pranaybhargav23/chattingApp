@@ -43,4 +43,30 @@ const getAllUsers = async (request, response) => {
         return response.status(500).json({ message: "Internal Server Error" });
     }
 }
-export {registerUser,getAllUsers};
+
+const listOfUsers = async (request, response) => {
+    try{
+        // Get the current user ID from the JWT token
+        const authHeader = request.headers.authorization;
+        if (!authHeader) {
+            return response.status(401).json({ message: "No token provided" });
+        }
+
+        const token = authHeader.split(' ')[1]; // Remove "Bearer " prefix
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const currentUserId = decoded.id;
+        const users = await userModal.find({ _id: { $ne: currentUserId } }).select('-password');
+        
+        return response.status(200).json({
+            success: true,
+            users: users,
+            message: "Users fetched successfully"
+        });
+    }catch(err){
+        console.error('Error fetching users:', err);
+        return response.status(500).json({ message: "Internal Server Error" });
+    }
+}
+
+
+export {registerUser,getAllUsers,listOfUsers};

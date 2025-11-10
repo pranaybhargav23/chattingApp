@@ -65,11 +65,11 @@ const LoginScreen = ({ navigation }) => {
         </TouchableOpacity>
         
         {/* Divider */}
-        <View style={styles.dividerContainer}>
+        {/* <View style={styles.dividerContainer}>
           <View style={styles.dividerLine} />
           <Text style={styles.dividerText}>or</Text>
           <View style={styles.dividerLine} />
-        </View>
+        </View> */}
         
         {/* Google Login Button */}
        

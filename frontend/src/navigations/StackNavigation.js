@@ -5,6 +5,7 @@ import SplashScreen from '../screens/SplashScreen';
 import SignupScreen from '../screens/SignupScreen';
 import LoginScreen from '../screens/LoginScreen';
 import TabNavigation from './TabNavigation';
+import ChatScreen from '../screens/ChatScreen';
 
 const Stack = createStackNavigator();
 
@@ -15,6 +16,8 @@ const StackNavigation = () => {
         <Stack.Screen name="Signup" component={SignupScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="TabNavigation" component={TabNavigation} />
+        <Stack.Screen name="ChatScreen" component={ChatScreen} />
+
         
     </Stack.Navigator>
   )
