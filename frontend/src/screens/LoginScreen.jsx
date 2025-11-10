@@ -1,6 +1,7 @@
-import { StyleSheet, Text, TextInput, TouchableOpacity, View, Image, Alert } from 'react-native';
+import { StyleSheet, Text, TextInput, TouchableOpacity, View, Alert } from 'react-native';
 import React, { useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 
 const LoginScreen = ({ navigation }) => {
@@ -21,9 +22,11 @@ const LoginScreen = ({ navigation }) => {
       }
       const response = await fetch("http://10.0.2.2:5000/api/login", options);
       const data = await response.json();
-      console.log('Login response data:----->', data.token);
+      console.log('Login response data:----->', data);
       if(data.token){
         await AsyncStorage.setItem('token', data.token);
+
+        await AsyncStorage.setItem('user', JSON.stringify(data.user));
          navigation.navigate('TabNavigation');
       }else{
         Alert.alert('Login Failed', 'Invalid email or password. Please try again.');
@@ -44,21 +47,28 @@ const LoginScreen = ({ navigation }) => {
     <View style={styles.container}>
       <Text style={styles.logoText}>Log In</Text>
       <View style={styles.inputContainer}>
-        <TextInput 
-          placeholder="Email" 
-          style={styles.input}
-          value={email}
-          onChangeText={setEmail}
-          keyboardType="email-address"
-          autoCapitalize="none"
-        />
-        <TextInput 
-          placeholder="Password" 
-          style={styles.input}
-          value={password}
-          onChangeText={setPassword}
-          secureTextEntry={true}
-        />
+        <View style={styles.inputWithIcon}>
+          <Icon name="email" size={24} color="#666" style={styles.inputIcon} />
+          <TextInput 
+            placeholder="Email"
+            style={styles.input}
+            value={email}
+            onChangeText={setEmail}
+            keyboardType="email-address"
+            autoCapitalize="none"
+          />
+        </View>
+        
+        <View style={styles.inputWithIcon}>
+          <Icon name="lock" size={24} color="#666" style={styles.inputIcon} />
+          <TextInput 
+            placeholder="Password"
+            style={styles.input}
+            value={password}
+            onChangeText={setPassword}
+            secureTextEntry={true}
+          />
+        </View>
       
         <TouchableOpacity style={styles.button} onPress={handleLogin}>
           <Text style={styles.buttonText}>Log In</Text>
@@ -101,14 +111,31 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   input: {
-    width: 350,
+    flex: 1,
     height: 50,
+    fontSize: 16,
+    color: '#333',
+    paddingLeft: 10,
+  },
+  inputWithIcon: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: 350,
+    height: 55,
     borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 32,
-    paddingHorizontal: 16,
+    borderColor: '#ddd',
+    borderRadius: 12,
+    paddingHorizontal: 15,
     marginVertical: 8,
-    marginLeft: 10,
+    backgroundColor: '#fff',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2,
+  },
+  inputIcon: {
+    marginRight: 10,
   },
   inputContainer: { 
     marginTop: 50, 

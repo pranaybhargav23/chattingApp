@@ -4,16 +4,16 @@ import {
   TextInput,
   TouchableOpacity,
   View,
-  Image,
   Alert,
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
-
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const SignupScreen = ({ navigation }) => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [number, setNumber] = useState('');
 
   const onHandleSignup = async () => {
     try {
@@ -47,8 +47,7 @@ const SignupScreen = ({ navigation }) => {
       setPassword('');
     } catch (err) {
       console.error('Error fetching user data:', err);
-    } 
-    
+    }
   };
 
   const navigateToLogin = () => {
@@ -59,25 +58,48 @@ const SignupScreen = ({ navigation }) => {
     <View style={styles.container}>
       <Text style={styles.logoText}>Sign Up</Text>
       <View style={styles.inputContainer}>
-        <TextInput
-          placeholder="username"
-          style={styles.input}
-          value={username}
-          onChangeText={setUsername}
-        />
-        <TextInput
-          placeholder="email"
-          style={styles.input}
-          value={email}
-          onChangeText={setEmail}
-        />
-        <TextInput
-          placeholder="password"
-          style={styles.input}
-          value={password}
-          onChangeText={setPassword}
-          secureTextEntry
-        />
+        <View style={styles.inputWithIcon}>
+          <Icon name="account-circle" size={24} color="#666" style={styles.inputIcon} />
+          <TextInput
+            placeholder="Username"
+            style={styles.input}
+            value={username}
+            onChangeText={setUsername}
+          />
+        </View>
+        
+        <View style={styles.inputWithIcon}>
+          <Icon name="email" size={24} color="#666" style={styles.inputIcon} />
+          <TextInput
+            placeholder="Email"
+            style={styles.input}
+            value={email}
+            onChangeText={setEmail}
+            keyboardType="email-address"
+          />
+        </View>
+        
+        <View style={styles.inputWithIcon}>
+          <Icon name="phone" size={24} color="#666" style={styles.inputIcon} />
+          <TextInput
+            placeholder="Phone Number"
+            style={styles.input}
+            keyboardType="numeric"
+            value={number}
+            onChangeText={setNumber}
+          />
+        </View>
+        
+        <View style={styles.inputWithIcon}>
+          <Icon name="lock" size={24} color="#666" style={styles.inputIcon} />
+          <TextInput
+            placeholder="Password"
+            style={styles.input}
+            value={password}
+            onChangeText={setPassword}
+            secureTextEntry
+          />
+        </View>
 
         <TouchableOpacity style={styles.button} onPress={onHandleSignup}>
           <Text style={styles.buttonText}>Sign Up</Text>
@@ -91,10 +113,10 @@ const SignupScreen = ({ navigation }) => {
         </View> */}
 
         {/* Google Sign Up Button */}
-        
+
         {/* Login Link */}
         <View style={styles.loginContainer}>
-          <Text style={styles.loginText}>Do you have an account? </Text>
+          <Text style={styles.loginText}>Already have an account? </Text>
           <TouchableOpacity onPress={navigateToLogin}>
             <Text style={styles.loginLink}>Log in</Text>
           </TouchableOpacity>
@@ -119,14 +141,31 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   input: {
-    width: 350,
+    flex: 1,
     height: 50,
+    fontSize: 16,
+    color: '#333',
+    paddingLeft: 10,
+  },
+  inputWithIcon: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: 350,
+    height: 55,
     borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 32,
-    paddingHorizontal: 16,
+    borderColor: '#ddd',
+    borderRadius: 12,
+    paddingHorizontal: 15,
     marginVertical: 8,
-    marginLeft: 10,
+    backgroundColor: '#fff',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2,
+  },
+  inputIcon: {
+    marginRight: 10,
   },
   inputContainer: {
     marginTop: 50,

@@ -36,7 +36,7 @@ const getAllUsers = async (request, response) => {
         }
         const jwtToken = jwt.sign({id:user._id,email:user.email},process.env.JWT_SECRET,{expiresIn:'1h'});
 
-        return response.status(200).json({token:jwtToken,message:"Login successful"});
+        return response.status(200).json({token:jwtToken,message:"Login successful",user:user});
 
     }catch(err){
         console.error('Error fetching users:', err);
